@@ -1,0 +1,26 @@
+
+  
+  .notification {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notification.info {
+    border-left: 4px solid #3498db;
+  }
+  
+  .notification.success {
+    border-left: 4px solid #2ecc71;
+  }
+  
+  .notification.warning {
+    border-left: 4px solid #f39c12;
+  }
+  
+  .notification.error {
+    border-left: 4px solid #e74c3c;
+  }
+  

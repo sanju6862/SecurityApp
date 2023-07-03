@@ -1,0 +1,61 @@
+<!-- lost_and_found.html -->
+{% extends "users/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'LostFound.css' %}">
+<script src="{% static 'LostFound.js' %}"></script>
+
+<!-- item_search.html -->
+<h5><a href="{% url 'lost_item_search' %}">All Items</a></h5>
+
+<form method="GET" action="{% url 'lost_item_search' %}">
+  <input type="text" name="search" placeholder="Search Items" value="{{ search_query }}">
+  <button type="submit">Search</button>
+  
+  <select name="filter_option">
+    <option value="all" {% if filter_option == 'all' %}selected{% endif %}>All</option>
+    <option value="recovered" {% if filter_option == 'recovered' %}selected{% endif %}>Recovered</option>
+    <option value="not_recovered" {% if filter_option == 'not_recovered' %}selected{% endif %}>Not Recovered</option>
+  </select>
+  
+  <button type="submit">Apply Filter</button>
+</form>
+
+<div id="search-results">
+  {% for item in items %}
+  <div class="item-card{% if item.is_recovered %} recovered{% endif %}">
+    <h3>{{ item.item_type }}</h3>
+    <p>Description: {{ item.description }}</p>
+    {% if item.item_type == 'other' %}
+    <p>Other Type: {{ item.other_type }}</p>
+    {% endif %}
+    {% if item.media %}
+    <img src="{{ item.media.url }}" alt="Item Image">
+    {% endif %}
+    <p>Reported by: <a href="{% url 'show_profile' item.user.profile.id %}">{{ item.user.first_name }}</a></p>
+    {% if item.recovered_by %}
+    <p>Recovered by: <a href="{% url 'show_profile' item.recovered_by.profile.id %}">{{ item.recovered_by.first_name }}</a></p>
+    {% else %}
+    <p>If this item belongs to you, <a href="{% url 'item_recovery' item.id %}" id="item-recovery-link">click here</a> to initiate the recovery process.</p>
+    {% endif %}
+  </div>
+  {% empty %}
+  <p>No items found.</p>
+  {% endfor %}
+</div>
+
+<script>
+  // Add event listener to the recovery form
+  document.getElementById("item-recovery-form").addEventListener("submit", function(event) {
+    // Prevent the form from submitting automatically
+    event.preventDefault();
+
+    // Show the confirmation dialog
+    if (confirm("Are you sure this item belongs to you?")) {
+      // If confirmed, submit the form
+      this.submit();
+    }
+  });
+</script>
+
+{% endblock content %}

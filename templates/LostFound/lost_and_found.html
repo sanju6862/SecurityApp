@@ -1,0 +1,12 @@
+{% extends "users/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'LostFound.css' %}">
+<script src="{% static 'LostFound.js' %}"></script>
+
+<div class="button-container">
+    <a href="{% url 'report_found_item' %}" class="report-lost-item-button">Report Found Item</a>
+    <a href="{% url 'lost_item_search' %}" class="search-lost-item-button">Search Lost Item</a>
+</div>
+
+{% endblock content %}

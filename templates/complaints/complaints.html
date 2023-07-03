@@ -1,0 +1,19 @@
+<!-- complaints_form.html -->
+{% extends "users/base.html" %}
+{% block content %}
+{%load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'complaints.css' %}">
+<script src="{% static 'complaints.js' %}"></script>
+<form method="post" class="form-container">
+  {% csrf_token %}
+  <div style="margin-bottom: 20px;">
+      <label for="{{ form.subject.id_for_label }}" class="form-label">Subject</label>
+      {{ form.subject }}
+  </div>
+  <div style="margin-bottom: 20px;">
+      <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+      {{ form.description }}
+  </div>
+  <button type="submit" class="submit-button">Submit</button>
+</form>
+{% endblock content %}

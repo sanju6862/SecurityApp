@@ -1,0 +1,48 @@
+{% extends "users/base.html" %}
+{% block content %}
+{%load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'view_complaint.css' %}">
+<div class="search-container">
+    <form action="{% url 'view_complaints' %}" method="GET">
+        <input type="text" placeholder="Search Complaint" name="search" value="{{ search }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+<div class="complaints-container">
+    {% for complaint in complaints %}
+        <div class="complaint">
+          
+            {% if user.profile.user_type == "security" %}
+            <h5>Complainant Name: <a href="{% url 'show_profile' complaint.user.profile.id %}">{{ complaint.user.first_name }}</a></h5>
+            <h5>Complainant Email: {{ complaint.user.email }}</h5>
+            {% endif %}
+            <h3 class="complaint-title">
+                Subject: {{ complaint.subject }}
+            </h3>
+            <p>Description: {{ complaint.description }}</p>
+            <p>Time: Created at: {{ complaint.created_at }}</p>
+            <p>Status: {{ complaint.status }}</p>
+            {% if complaint.Remarks %}
+                <p>Remarks: {{ complaint.Remarks }}</p>
+            {% endif %}
+            {% if user.profile.user_type == "security" %}
+            <form action="{% url 'update_complaint_status' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="complaint_id" value="{{ complaint.id }}">
+                <select name="status-selector" class="complaint-select">
+                    <option value="Pending" {% if complaint.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="In Progress" {% if complaint.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option value="Resolved" {% if complaint.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                </select>
+                <textarea name="remarks" class="remarks-textarea" placeholder="Remarks">{{ complaint.Remarks }}</textarea>
+                <button type="submit" name="action" value="update">Update</button>
+            </form>
+            
+            {% endif %}
+            <hr>
+        </div>
+    {% empty %}
+        <p class="no-complaints">No complaints found.</p>
+    {% endfor %}
+</div>
+{% endblock content %}

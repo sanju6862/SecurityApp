@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% extends "users/base.html" %}
+{% block content %}
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'notifications.css' %}">
+    <script src="{% static 'notifications.js' %}"></script>
+</head>
+<body>
+    <div class="notification-bar" id="notificationBar">
+        <div id="notificationList"></div>
+    </div>
+</body>
+</html>
+{% endblock %}

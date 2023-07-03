@@ -1,0 +1,48 @@
+{% extends "users/base.html" %}
+{% block content %}
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'viewincidents.css' %}">
+  <script src="{% static 'view_incidents.js' %}"></script>
+  <h1><a href="{% url 'view_incident' %}">All Incidents</a></h1>
+
+  <!-- Search form -->
+  <form method="GET" action="{% url 'view_incident' %}">
+    <input type="text" name="search" placeholder="Search incidents">
+    <button type="submit">Search</button>
+  </form>
+
+  <div class="incidents-container">
+    {% for incident in incidents %}
+      <div class="incident-card">
+        <h3>{{ incident.incident_type }}</h3>
+        <p>Date of Incident: {{ incident.date }}</p>
+        <p>Time of Incident: {{ incident.time }}</p>
+        <p>Zone: {{ incident.zone }}</p>
+        <p>Reported By: <a href="{% url 'show_profile' incident.user.profile.id %}">{{ incident.user.first_name }}</a></p>
+        <p>Description: {{ incident.description }}</p>
+        {% if incident.media_file %}
+          <div class="media-container">
+            {% if incident.media_file.url|lower|slice:'-4:' == '.mp4' %}
+              <video width="320" height="240" controls>
+                <source src="{{ incident.media_file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            {% elif incident.media_file.url|lower|slice:'-4:' == '.jpg' or incident.media_file.url|lower|slice:'-5:' == '.jpeg' or incident.media_file.url|lower|slice:'-4:' == '.png' %}
+              <div class="image-container">
+                <img src="{{ incident.media_file.url }}" alt="Incident Image" class="zoomable-image">
+                <div class="zoom-buttons">
+                  <button class="zoom-in-button" onclick="zoomIn(this)">ZoomIn</button>
+                  <button class="zoom-out-button" onclick="zoomOut(this)">ZoomOut</button>
+                </div>
+              </div>
+            {% else %}
+              <a href="{{ incident.media_file.url }}" target="_blank">View Media</a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% empty %}
+      <p class="no-incidents">No incidents found.</p>
+    {% endfor %}
+  </div>
+{% endblock content %}

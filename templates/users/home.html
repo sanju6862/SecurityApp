@@ -1,0 +1,40 @@
+{% extends "users/base.html" %}
+
+{% block title %} Home Page {% endblock title %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, {{ user.first_name.title|default:'Guest' }}</h1>
+        <hr class="my-4">
+        {% if user.is_authenticated %}
+            <div class="row my-3 p-3">
+                <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="cursor: pointer;"/>
+            </div>
+            <p class="lead">
+                Name: {{ user.first_name }} {{ user.last_name }} <br>
+                Email: {{ user.email }} <br>
+                  <a class="btn btn-primary btn-lg" href="{% url 'report_incident' %}">Report an Incident</a>
+                {% if user.profile.user_type == "student" or user.profile.user_type == "faculty" %}
+                    <a class="btn btn-primary btn-lg" href="{% url 'create_complaint' %}" role="button">File Complaint</a>
+                    <a class="btn btn-primary btn-lg" href="{% url 'view_complaints' %}" role="button">View Complaints</a>
+                {% elif user.profile.user_type == "security" %}
+                    <a class="btn btn-primary btn-lg" 
+                    href="{% url 'view_complaints' %}" 
+                    role="button">View Complaints
+                </a>
+                <a class="btn btn-primary btn-lg" 
+                    href="{% url 'view_incident' %}" 
+                    role="button">View Incidents
+                </a>
+                <a href="{% url 'facialsearch' %}" class="btn btn-primary btn-lg" role="button">Facial Search</a>
+                {% elif user.profile.user_type is None %}
+                    <a class="btn btn-primary btn-lg" href="{% url 'users-profile' %}" role="button">Complete Your Profile</a>
+                {% endif %}
+            </p>
+        {% else %}
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Sign in</a>
+            </p>
+        {% endif %}
+    </div>
+{% endblock content %}

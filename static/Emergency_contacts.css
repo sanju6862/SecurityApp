@@ -1,0 +1,32 @@
+/* Emergency_contacts.css */
+
+.contact-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .contact-card {
+    text-align: center;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .contact-card-header {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .contact-card-header h3 {
+    color: #007bff;
+    margin: 0;
+  }
+  
+  .contact-card-body p {
+    margin: 0;
+  }
+  
+  /* Additional styling can be added as per your preference */
+  

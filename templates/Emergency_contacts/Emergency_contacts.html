@@ -1,0 +1,23 @@
+<!-- emergency_contact_list.html -->
+{% extends "users/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'Emergency_contacts.css' %}">
+
+<h1>Emergency Contacts</h1>
+<div class="contact-list">
+  {% for contact in emergency_contacts %}
+    <div class="contact-card">
+      <div class="contact-card-header">
+        <h3>{{ contact.name }}</h3>
+      </div>
+      <div class="contact-card-body">
+        <p><strong>Phone Number:</strong> {{ contact.phone_number }}</p>
+        <p><strong>Email:</strong> {{ contact.email }}</p>
+      </div>
+    </div>
+  {% empty %}
+    <p>No emergency contacts found.</p>
+  {% endfor %}
+</div>
+{% endblock %}

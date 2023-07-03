@@ -1,0 +1,22 @@
+<!-- live_location.html -->
+{% extends "users/base.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Location Sender</title>
+    <link rel="stylesheet" href="{% static 'location_sender.css' %}">
+    <!-- Include the Google Maps API script -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+</head>
+<body>
+    <h1>Activate Emergency Button</h1>
+    <div class="button-container">
+        <button id="activateButton" onclick="activateSendingLocation()">Activate</button>
+        <button id="deactivateButton" onclick="deactivateSendingLocation()" disabled>Deactivate</button>
+    </div>
+    <script src="{% static 'location_sender.js' %}"></script>
+</body>
+</html>
+{% endblock content %}
