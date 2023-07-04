@@ -1,0 +1,13 @@
+{% extends "users/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'create_announcement.css' %}">
+<div class="container">
+  <h1>Edit Announcement</h1>
+  <form method="POST" class="announcement-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Update Announcement</button>
+  </form>
+</div>
+{% endblock content %}

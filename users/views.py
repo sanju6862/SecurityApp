@@ -9,6 +9,7 @@ from .models import *
 from django.contrib.auth.models import User
 from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 import boto3
+from django.db.models import Q
 
 def home(request):
     return render(request, 'users/home.html')
@@ -109,3 +110,11 @@ def show_profile(request, profile_id):
     print(profile_id)
     profile = Profile.objects.get(id=profile_id)
     return render(request, 'users/view_profile.html', {'profile': profile})
+
+
+def search_result(request):
+    query = request.GET.get('q')
+    users = User.objects.filter(Q(username__icontains=query) | Q(first_name__icontains=query) |  Q(last_name__icontains=query)).values_list('username', flat=True)
+    unique_usernames = set(users)
+    profiles = Profile.objects.filter(user__username__in=users)
+    return render(request, 'facialsearch/facialsearchresults.html', {'profiles': profiles})

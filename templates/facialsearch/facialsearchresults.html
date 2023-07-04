@@ -8,7 +8,7 @@
     <link rel="stylesheet"  href="{% static 'facialsearch.css' %}">
 </head>
 <body>
-    <h1>Facial Search Results</h1>
+    <h1>Profiles</h1>
     {% for profile in profiles %}
     <div class="card">
         <div class="row my-3 p-3">
@@ -37,7 +37,7 @@
     {% empty %}
     <p>No profiles found.</p>
     {% endfor %}
-    <a href="/facialsearch/" class="button"> search more </a>
+    <!-- <a href="/facialsearch/" class="button"> search more </a> -->
     
 </body>
 </html>

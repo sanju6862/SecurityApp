@@ -1,0 +1,27 @@
+{% extends "users/base.html" %}
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'announcements.css' %}">
+<div class="container">
+  <h1>Announcements</h1>
+  <div class="announcement-list">
+    {% for announcement in announcements %}
+      <div class="announcement">
+        <h2 class="announcement-title">{{ announcement.title }}</h2>
+        <p class="announcement-date">{{ announcement.timestamp|date:"F d, Y" }} - {{ announcement.timestamp|time:"H:i" }}</p>
+        <div class="announcement-content">{{ announcement.content }}</div>
+        <p class="announcement-author">Author: {{ announcement.author }}</p>
+        <div class="announcement-actions">
+          {% if user.profile.user_type == "security" %}
+            <a href="{% url 'update_announcement' announcement.id %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'delete_announcement' announcement.id %}" class="btn btn-sm btn-danger">Delete</a>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <p class="empty-message">No announcements available.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

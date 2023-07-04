@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'incidentreporting',
     'LostFound',
     'django.contrib.gis',
+    'announcements',
 ]
 
 MIDDLEWARE = [

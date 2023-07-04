@@ -1,13 +1,27 @@
+/* map.css */
+
 #container {
-    height: 600px;
+    text-align: center;
+    margin: 20px;
+  }
+  
+  #map-section {
+    margin-top: 20px;
+  }
+  
+  #map {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#map {
     height: 400px;
-    width: 800px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+  }
+  
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  

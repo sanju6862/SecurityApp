@@ -3,7 +3,18 @@
 {% block title %} Home Page {% endblock title %}
 
 {% block content %}
+{%load static %}
+
     <div class="jumbotron">
+        {% if user.profile.user_type == "security" %}
+        <div class="container">
+            <form method="GET" action="{% url 'search_result' %}">
+              <input type="text" name="q" placeholder="Search users" id="search-input">
+              <button type="submit">Search</button>
+            </form>
+          </div>
+        {%endif%}
+          <!-- <script src="{% static 'home.js' %}"></script> -->
         <h1 class="display-4">Welcome, {{ user.first_name.title|default:'Guest' }}</h1>
         <hr class="my-4">
         {% if user.is_authenticated %}
@@ -27,6 +38,7 @@
                     role="button">View Incidents
                 </a>
                 <a href="{% url 'facialsearch' %}" class="btn btn-primary btn-lg" role="button">Facial Search</a>
+                <a href="{% url 'create_announcement' %}" class="btn btn-primary btn-lg" role="button">Create Announcement</a>
                 {% elif user.profile.user_type is None %}
                     <a class="btn btn-primary btn-lg" href="{% url 'users-profile' %}" role="button">Complete Your Profile</a>
                 {% endif %}

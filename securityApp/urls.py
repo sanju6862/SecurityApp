@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from LostFound.views import item_recovery, item_search, lost_and_found, report_found_item
 from PanicButton.views import location_sender, panic_button
+from announcements.views import announcement_list, create_announcement, delete_announcement, update_announcement
 from facialsearch.views import facialsearch
 from incidentreporting.views import report_incident, view_incident
 from map.views import map_view
@@ -51,7 +52,10 @@ urlpatterns = [
     path('map/', map_view, name='map'),
     path('panic_button/',panic_button,name = 'panic_button'),
     path('location_sender/',location_sender,name = 'location_sender'),
-    
+    path('announcements/',announcement_list,name = 'announcements'),
+    path('create_announcement',create_announcement,name = 'create_announcement'),
+    path('update_announcement/<int:announcement_id>/', update_announcement, name='update_announcement'),
+    path('delete_announcement/<int:announcement_id>/', delete_announcement, name='delete_announcement'),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
 
 ] 
