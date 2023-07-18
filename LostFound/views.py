@@ -4,7 +4,6 @@ from .models import Item
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
-
 def lost_and_found(request):
     return render(request, 'LostFound/lost_and_found.html')
 
@@ -19,17 +18,12 @@ def report_found_item(request):
             item.save()
             form.save_m2m()  # Save many-to-many fields if any
             messages.success(request, 'Item reported successfully!')
-            return redirect('users-home')
+            return render(request, 'LostFound/successreport.html', {'item': item})
     else:
         form = FoundItemForm()
     return render(request, 'LostFound/report_found_item.html', {'form': form})
 
 
-
-from django.shortcuts import render
-from .models import Item
-from django.shortcuts import render
-from .models import Item
 
 def item_search(request):
     search_query = request.GET.get('search', '')
@@ -43,8 +37,21 @@ def item_search(request):
         items = Item.objects.all()
 
     if search_query:
-        items = items.filter(item_type__icontains=search_query)
+        try:
+            search_query = int(search_query)
+            items = items.filter(
+                Q(id=search_query) |
+                Q(item_type__icontains=search_query) |
+                Q(description__icontains=search_query)
+            )
+        except ValueError:
+            items = items.filter(
+                Q(item_type__icontains=search_query) |
+                Q(description__icontains=search_query)
+            )
+
     items = items.order_by('-date_time')
+
     context = {
         'items': items,
         'filter_option': filter_option,

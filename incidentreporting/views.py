@@ -49,8 +49,7 @@ def view_incident(request):
         incidents = incidents.filter(
             Q(incident_type__icontains=search_query) |
             Q(location__icontains=search_query) |
-            Q(description__icontains=search_query) |
-            Q(other_type_description__icontains=search_query)
+            Q(description__icontains=search_query)
         )
 
     return render(request, 'incidentreporting/view_incident.html', {'incidents': incidents})

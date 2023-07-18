@@ -1,19 +1,21 @@
 {% extends "users/base.html" %}
 {% block content %}
   {% load static %}
+
   <link rel="stylesheet" href="{% static 'map.css' %}">
   <link rel="stylesheet" href="{% static 'incidentreporting.css' %}">
+  <h4>Select Location</h4>
+  <div id="container">
+    <div id="map"></div>
+  </div>
+  <!-- <script src="{% static 'incidentreporting.js' %}"></script> -->
+  <script src="{% static 'incidentreporting.js' %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpOiF-121i2BcRBwWHg2ZSJxSl2QGsAwY&callback=initMap" async defer></script>
   <div class="form-container">
     <form method="post" action="{% url 'report_incident' %}" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
-      <div id="container">
-        <div id="map"></div>
-      </div>
-      <!-- <script src="{% static 'incidentreporting.js' %}"></script> -->
-      <script src="{% static 'incidentreporting.js' %}"></script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpOiF-121i2BcRBwWHg2ZSJxSl2QGsAwY&callback=initMap" async defer></script>
-  
+   
       <input type="hidden" id="latitude-input" name="latitude"> 
       <input type="hidden" id="longitude-input" name="longitude"> 
       <button type="submit">Submit</button>

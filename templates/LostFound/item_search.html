@@ -26,6 +26,7 @@
   <div class="item-card{% if item.is_recovered %} recovered{% endif %}">
     <h3>{{ item.item_type }}</h3>
     <p>Description: {{ item.description }}</p>
+    <p>Item Number : {{item.id}}</p>
     {% if item.item_type == 'other' %}
     <p>Other Type: {{ item.other_type }}</p>
     {% endif %}
@@ -36,6 +37,7 @@
     {% if item.recovered_by %}
     <p>Recovered by: <a href="{% url 'show_profile' item.recovered_by.profile.id %}">{{ item.recovered_by.first_name }}</a></p>
     {% else %}
+    
     <p>If this item belongs to you, <a href="{% url 'item_recovery' item.id %}" id="item-recovery-link">click here</a> to initiate the recovery process.</p>
     {% endif %}
   </div>

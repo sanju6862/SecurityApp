@@ -6,10 +6,9 @@
 <script src="{% static 'LostFound.js' %}"></script>
 
 <div class="recovery-success-container">
-    <h2>Recovery Successful</h2>
-    <p>Thank you for recovering the item.</p>
-    <p>Don't forget to say thanks to <a href="{% url 'show_profile' item.user.profile.id %}">{{ item.user.first_name}}</a>  for submitting it.</p>
-    <p>Please proceed to the proctor's office during office hours to collect the item under item Number : {{item.id}}.</p>
+    <h2>Reporting Successful</h2>
+    <p>Thank you for submitting the item.</p>
+    <p>Please proceed to the proctor's office during office hours handover the item under item Number : {{item.id}}.</p>
     <!-- Additional instructions or information can be added here -->
 </div>
 

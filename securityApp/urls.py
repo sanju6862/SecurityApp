@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.conf.url import url
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.staticfiles.views import serve
 from django.contrib.auth import views as auth_views
 from LostFound.views import item_recovery, item_search, lost_and_found, report_found_item
 from PanicButton.views import location_sender, panic_button
@@ -57,6 +59,7 @@ urlpatterns = [
     path('update_announcement/<int:announcement_id>/', update_announcement, name='update_announcement'),
     path('delete_announcement/<int:announcement_id>/', delete_announcement, name='delete_announcement'),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
-
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATICFILES_DIRS[0]}), 
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
