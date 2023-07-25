@@ -1,0 +1,7 @@
+<!-- send_message.html -->
+<form method="POST" action="{% url 'send_message' %}">
+    {% csrf_token %}
+    <input type="hidden" name="receiver_id" value="{{ user.profile.id}}">
+    <textarea name="message" rows="3" cols="40"></textarea>
+    <button type="submit">Send</button>
+</form>

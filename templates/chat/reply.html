@@ -1,0 +1,6 @@
+<!-- reply_message.html -->
+<form method="POST" action="{% url 'reply_message' message_id %}">
+    {% csrf_token %}
+    <textarea name="message" rows="3" cols="40"></textarea>
+    <button type="submit">Reply</button>
+</form>
