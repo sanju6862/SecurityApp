@@ -4,9 +4,13 @@ from .models import Item
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def lost_and_found(request):
     return render(request, 'LostFound/lost_and_found.html')
 
+@login_required
 def report_found_item(request):
     if request.method == 'POST':
         form = FoundItemForm(request.POST, request.FILES)
@@ -24,7 +28,7 @@ def report_found_item(request):
     return render(request, 'LostFound/report_found_item.html', {'form': form})
 
 
-
+@login_required
 def item_search(request):
     search_query = request.GET.get('search', '')
     filter_option = request.GET.get('filter_option', 'all')
@@ -59,6 +63,8 @@ def item_search(request):
     }
 
     return render(request, 'LostFound/item_search.html', context)
+
+@login_required
 def item_recovery(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
 

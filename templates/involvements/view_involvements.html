@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+{% extends "users/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'guidelines.css' %}">
+<head>
+    <title>Involvements</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Emergency_contacts.css' %}">
+</head>
+<body>
+    <!-- involvements_template.html -->
+
+<h1>{{ user.first_name }}'s Involvements - {{ involvements|length }}</h1>
+
+    <div class="contact-list">
+
+        {% if involvements %}
+            {% for involvement in involvements %}
+            <div class="contact-card guideline-card">
+                <div class="contact-card-header">
+                    <h3>{{ involvement.title }}</h3>
+                </div>
+                <div class="contact-card-body">
+                    <p>Description : {{ involvement.description }}</p>
+                    <p>Action Taken : {{involvement.action_taken}}</p>
+                    <p>Date : {{involvement.date}}</p>
+                {% if user.profile.user_type == "security" %}
+                <div>
+                    <a href="{% url 'update_involvement' involvement.id %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'delete_involvement' involvement.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+                {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h4>No Involvements available</h4>
+        {% endif %}
+
+    </div>
+</body>
+{% endblock content %}
+</html>

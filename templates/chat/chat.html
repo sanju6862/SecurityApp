@@ -1,0 +1,74 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Chat Interface</title>
+    </head>
+    <body>
+      <div id="chat-messages-container">
+        <h1>Chat between {{ user1 }} and {{ user2 }}</h1>
+    <div id="chat">
+        <div id="messages">
+            {% for message in messages %}
+                <div><strong>{{ message.sender }}: </strong>{{ message.content }}</div>
+            {% endfor %}
+        </div>
+      </div>
+    
+      <div>
+        <input type="text" id="message-input" placeholder="Type your message here">
+        <button onclick="onSendMessage()">Send</button>
+      </div>
+    
+      <script>
+        // Establish WebSocket connection
+        const chatSocket = new WebSocket(
+          'ws://' + window.location.host + '/ws/chat/{{ user1.id }}/{{ user2.id }}/'
+        );
+    
+        chatSocket.onopen = function (event) {
+          // WebSocket connection is open
+          console.log('WebSocket connection established.');
+        };
+    
+        chatSocket.onclose = function (event) {
+          // WebSocket connection is closed
+          console.log('WebSocket connection closed.');
+        };
+    
+        chatSocket.onmessage = function (event) {
+          // Handle receiving messages from the server
+          const messageData = JSON.parse(event.data);
+          const message = messageData.message;
+    
+          // Display the received message in the chat interface
+          const chatMessagesContainer = document.getElementById('chat-messages-container');
+          const newMessageElement = document.createElement('div');
+          newMessageElement.innerText = message;
+          chatMessagesContainer.appendChild(newMessageElement);
+    
+          // You can apply your own CSS styles or layout to the newMessageElement
+        };
+    
+        // Define a function to send messages through the WebSocket
+        function sendMessage(message) {
+          chatSocket.send(JSON.stringify({
+            'message': message
+          }));
+        }
+    
+        // When the user sends a message from the chat interface
+        function onSendMessage() {
+          const messageInput = document.getElementById('message-input');
+          const message = messageInput.value.trim();
+          if (message !== '') {
+            // Send the message through the WebSocket
+            sendMessage(message);
+            // Clear the message input field
+            messageInput.value = '';
+          }
+        }
+      </script>
+    </body>
+    </html>
+    

@@ -6,15 +6,16 @@ from django.contrib.auth import views as auth_views
 from LostFound.views import item_recovery, item_search, lost_and_found, report_found_item
 from PanicButton.views import location_sender, panic_button
 from announcements.views import announcement_list, create_announcement, delete_announcement, update_announcement
-from chat.views import chat_detail, chat_list, reply_message, send_message
 from facialsearch.views import facialsearch
+from guidelines.views import add_document, add_guideline, delete_guideline, delete_resource, guideline_list, update_guideline
 from incidentreporting.views import report_incident, view_incident
 from map.views import map_view
 from notifications.views import notification_view
 from users.views import CustomLoginView, ResetPasswordView, ChangePasswordView, show_profile
 from complaints.views import *
 from Emergency_contacts.views import Emergency_contacts
-
+import involvements
+import chat
 from users.forms import LoginForm
 
 urlpatterns = [
@@ -57,6 +58,14 @@ urlpatterns = [
     path('create_announcement',create_announcement,name = 'create_announcement'),
     path('update_announcement/<int:announcement_id>/', update_announcement, name='update_announcement'),
     path('delete_announcement/<int:announcement_id>/', delete_announcement, name='delete_announcement'),
+    path('guidelines/', guideline_list, name='guideline_list'),
+    path('guidelines/add/', add_guideline, name='add_guideline'),
+    path('guidlines/documents/add/', add_document, name='add_document'),
+    path('guideline/update/<int:guideline_id>/', update_guideline, name='update_guideline'),
+    path('guideline/delete/<int:guideline_id>/', delete_guideline, name='delete_guideline'),
+    path('guideline/resource/<int:resource_id>/', delete_resource, name='delete_resource'),
+    path('involvements/', include('involvements.urls')),
+    path('chating/', include('chat.urls')),
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)

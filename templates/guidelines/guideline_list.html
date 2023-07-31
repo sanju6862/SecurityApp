@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+{% extends "users/base.html" %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'guidelines.css' %}">
+<head>
+    <title>Guidelines and Resources</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Emergency_contacts.css' %}">
+</head>
+<body>
+    <h1>Guidelines</h1>
+    <div class="contact-list">
+
+        {% if guidelines %}
+            {% for guideline in guidelines %}
+            <div class="contact-card guideline-card">
+                <div class="contact-card-header">
+                    <h3>{{ guideline.title }}</h3>
+                </div>
+                <div class="contact-card-body">
+                    <p>{{ guideline.content }}</p>
+                </div>
+                {% if user.profile.user_type == "security" %}
+                <div>
+                    <a href="{% url 'update_guideline' guideline.id %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'delete_guideline' guideline.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <h4>No guidelines available</h4>
+        {% endif %}
+
+    </div>
+
+    <h1>Resources</h1>
+    <div class="contact-list">
+        {% if documents %}
+            {% for document in documents %}
+            <div class="contact-card document-card">
+                <div class="contact-card-header">
+                    <h3 class="document-item-title">{{ document.title }}</h3>
+                </div>
+                <div class="contact-card-body">
+                    <a href="{{ document.file.url }}" target="_blank">View Document</a>
+                </div>
+                {% if user.profile.user_type == "security" %}
+                <div>
+                    <a href="{% url 'delete_resource' document.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <h4>No resources available</h4>
+        {% endif %}
+    </div>
+
+    <h1> </h1>
+    <!-- Add links to add guidelines, documents, and media if desired -->
+    {% if user.profile.user_type == "security" %}
+    <div class="button-container">
+        <a href="{% url 'add_guideline' %}" class="add-button">Add Guideline</a>
+        <a href="{% url 'add_document' %}" class="add-button">Add Resource</a>
+    </div>
+    {% endif %}
+
+</body>
+{% endblock content %}
+</html>

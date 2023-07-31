@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'announcements',
     'channels',
     'chat',
+    'guidelines',
+    'involvements',
 ]
 
 MIDDLEWARE = [
@@ -42,7 +44,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'chat.active_user_middleware.ActiveUserMiddleware',
 ]
 
 ROOT_URLCONF = 'securityApp.urls'
@@ -66,6 +67,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'securityApp.wsgi.application'
+ASGI_APPLICATION = 'securityApp.routing.application'
 
 # Database configuration
 DATABASES = {
@@ -78,6 +80,14 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.parse('postgres://ishwar:bvPljfupBYEWlTMJE3JoIcNz2lXzM7QL@dpg-civrai407spr6t9s3csg-a.oregon-postgres.render.com/securitysystem')
+# }
+
+
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -146,3 +156,8 @@ gmaps = googlemaps.Client(key=GOOGLE_MAPS_API_KEY)
 # settings.py
 USER_LASTSEEN_TIMEOUT = 600  # 10 minutes
 USER_ONLINE_TIMEOUT = 300  # 5 minutes
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}

@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AnnouncementForm
 from .models import Announcement
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def announcement_list(request):
     announcements = Announcement.objects.order_by('-timestamp')
     return render(request, 'announcements/announcement_list.html', {'announcements': announcements})
 
+@login_required
 def create_announcement(request):
     if request.method == 'POST':
         form = AnnouncementForm(request.POST)
@@ -20,6 +23,7 @@ def create_announcement(request):
         form = AnnouncementForm()
     return render(request, 'announcements/create_announcement.html', {'form': form})
 
+@login_required
 def update_announcement(request, announcement_id):
     announcement = get_object_or_404(Announcement, pk=announcement_id)
 
@@ -33,6 +37,7 @@ def update_announcement(request, announcement_id):
 
     return render(request, 'announcements/update_announcement.html', {'form': form, 'announcement': announcement})
 
+@login_required
 def delete_announcement(request, announcement_id):
     announcement = get_object_or_404(Announcement, pk=announcement_id)
     announcement.delete()

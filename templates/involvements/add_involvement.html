@@ -1,0 +1,21 @@
+
+{% extends "users/base.html" %}
+{% block content %}
+{%load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'create_announcement.css' %}">
+<head>
+    <title>Add Involvement</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Involvement</h1>
+        <form method="POST" class="announcement-form">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div> 
+</body>
+
+
+{% endblock content %}

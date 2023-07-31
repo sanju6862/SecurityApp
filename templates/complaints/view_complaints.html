@@ -8,6 +8,7 @@
         <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>
+<a href="{% url 'view_complaints' %}" > All Complaints </a>
 <div class="complaints-container">
     {% for complaint in complaints %}
         <div class="complaint">

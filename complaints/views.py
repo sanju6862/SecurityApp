@@ -6,7 +6,9 @@ from complaints.models import *
 from django.core.mail import send_mail
 from notifications.models import Notification
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def create_complaint(request):  # sourcery skip: extract-method
     if request.method == 'POST':
         form = ComplaintForm(request.POST)
@@ -29,8 +31,7 @@ def create_complaint(request):  # sourcery skip: extract-method
         form = ComplaintForm()
     return render(request, 'complaints/complaints.html', {'form': form})
 
-from django.db.models import Q
-
+@login_required
 def view_complaints(request):
     user = request.user
     search = request.GET.get('search', '')
@@ -52,12 +53,8 @@ def view_complaints(request):
 
     return render(request, 'complaints/view_complaints.html', {'complaints': complaints, 'search': search})
 
-from django.shortcuts import redirect
 
-# ...
-
-from django.core.mail import send_mail
-
+@login_required
 def update_complaint_status(request):
     if request.method == 'POST':
         complaint_id = request.POST.get('complaint_id')

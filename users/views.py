@@ -113,8 +113,13 @@ def show_profile(request, profile_id):
 
 
 def search_result(request):
+    user = request.user
     query = request.GET.get('q')
-    users = User.objects.filter(Q(username__icontains=query) | Q(first_name__icontains=query) |  Q(last_name__icontains=query)).values_list('username', flat=True)
-    unique_usernames = set(users)
-    profiles = Profile.objects.filter(user__username__in=users)
-    return render(request, 'facialsearch/facialsearchresults.html', {'profiles': profiles})
+    if query.lower() == "all":
+        users = User.objects.all().distinct()
+    else:
+        users = User.objects.filter(
+             Q(username__icontains=query) | Q(first_name__icontains=query) | Q(last_name__icontains=query)
+         )
+    profiles = Profile.objects.filter(user__in=users)
+    return render(request, 'facialsearch/facialsearchresults.html', {'profiles': profiles,'user' : user})

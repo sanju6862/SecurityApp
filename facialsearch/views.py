@@ -4,13 +4,21 @@ from PIL import Image
 from django.shortcuts import render
 from users.models import *
 import imghdr
+from django.contrib.auth.decorators import login_required
+
 rekognition = boto3.client('rekognition', region_name='us-east-1')
 dynamodb = boto3.client('dynamodb', region_name='us-east-1')
 bucket_name = 'students-iitbhu'
 folder_prefix = 'index'
 
+@login_required
 def facialsearch(request):
     if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated and user.profile.user_type != 'security':
+            print(user.profile.user_type)
+            return render(request, 'facialsearch/bhag.html', {})
+
         uploaded_files = request.FILES.getlist('images')
         
         found_users = set()  # Change to set

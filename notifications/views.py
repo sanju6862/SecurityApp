@@ -1,8 +1,9 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 from notifications.models import Notification
 
+@login_required
 def notification_view(request):
     if request.method == 'GET':
         # Retrieve the user's notifications

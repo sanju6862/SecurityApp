@@ -63,3 +63,28 @@
             color: #666;
             font-style: italic;
         }
+        /* buttons for involvements */
+/* Style for the button-like links */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+  
+  /* Hover effect */
+  .btn:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Additional styling for the second button (optional) */
+  .btn-secondary {
+    background-color: #e74c3c;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #c0392b;
+  }
+  

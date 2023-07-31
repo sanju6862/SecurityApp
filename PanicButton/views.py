@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 # from .models import Location
+from django.contrib.auth.decorators import login_required
 
 @csrf_exempt
 def location_sender(request):
@@ -20,5 +21,7 @@ def location_sender(request):
         return JsonResponse({'status': 'success'})
     
     return JsonResponse({'status': 'error'})
+
+@login_required
 def panic_button(request):
     return render(request,'panic_button/location_sender.html')

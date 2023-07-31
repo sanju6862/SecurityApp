@@ -5,7 +5,9 @@ from .models import Incident
 from django.db.models import Q
 from django.contrib.gis.geos import Point
 from django.contrib.gis.geos import Point
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def report_incident(request):
     if request.method == 'POST':
         form = IncidentForm(request.POST, request.FILES)
@@ -28,21 +30,11 @@ def report_incident(request):
     return render(request, 'incidentreporting/incidentreporting.html', {'form': form})
 
 
-from django.shortcuts import render
 
-
+@login_required
 def view_incident(request):
     # Get all incidents ordered by date and time
     incidents = Incident.objects.order_by('-registered_time')
-
-
-    # Filtering based on time (optional)
-    # You can modify this code to filter incidents within a specific time range
-    # For example, to display incidents from the past 24 hours:
-    # from datetime import timedelta, datetime
-    # time_range = datetime.now() - timedelta(hours=24)
-    # incidents = incidents.filter(date_time__gte=time_range)
-
     # Searching incidents based on a query parameter
     search_query = request.GET.get('search')
     if search_query:

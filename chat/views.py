@@ -1,47 +1,34 @@
+# chat/views.py
+from django.http import JsonResponse
 from django.shortcuts import render
-from .models import UserProfile, Message
+from .models import Message
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.db.models import Q
 
-def chat_list(request):
-    profiles = UserProfile.objects.all()
-    return render(request, 'chat/chat_list.html', {'profiles': profiles})
 
+def chat(request, id1, id2):
+    user1 = get_object_or_404(User, pk=id1)
+    user2 = get_object_or_404(User, pk=id2)
+    
+    # Use Q object to perform OR operation on the sender and receiver fields
+    messages = Message.objects.filter(
+        (Q(sender=user1) & Q(receiver=user2)) |
+        (Q(sender=user2) & Q(receiver=user1))
+    ).order_by('timestamp')
 
-def chat_detail(request, user_id):
-    # Retrieve the messages for the given user_id or any other relevant logic
-    messages = Message.objects.filter(Q(sender_id=user_id) | Q(receiver_id=user_id))  # Adjust the filtering logic as per your requirements
-    context = {
+    return render(request, 'chat/chat.html', {
+        'user1': user1,
+        'user2': user2,
         'messages': messages,
-        'user_id': user_id,
-    }
-    return render(request, 'chat/chat_details.html', context)
+    })
 
-def send_message(request):
+
+def send_message(request, id1, id2):
+    user1 = get_object_or_404(User, pk=id1)
+    user2 = get_object_or_404(User, pk=id2)
     if request.method == 'POST':
-        sender = request.user
-        receiver_id = request.POST['receiver_id']
-        message_content = request.POST['message']
-
-        receiver = User.objects.get(id=receiver_id)
-
-        # Create a new message instance
-        message = Message.objects.create(sender=sender, receiver=receiver, message=message_content)
-
-        return redirect('chat/chat_details', user_id=receiver_id)
-
-    return render(request, 'chat/send.html')
-
-def reply_message(request, message_id):
-    if request.method == 'POST':
-        sender = request.user
-        parent_message = Message.objects.get(id=message_id)
-        receiver = parent_message.sender  # Reply to the original sender
-        message_content = request.POST['message']
-
-        # Create a new message instance as a reply
-        message = Message.objects.create(sender=sender, receiver=receiver, message=message_content)
-
-        return redirect('chat_detail', user_id=receiver.id)
-
-    return render(request, 'chat/reply.html', {'message_id': message_id})
+        content = request.POST.get('message')
+        if content:
+            Message.objects.create(sender=user1, receiver=user2, content=content)
+    return chat(request,id1,id2)

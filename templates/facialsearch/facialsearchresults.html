@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Facial Search Results</title>
+    <title>Profiles</title>
     {%load static %}
     <link rel="stylesheet"  href="{% static 'facialsearch.css' %}">
 </head>
@@ -33,7 +33,13 @@
                 <li><strong>Contact Parents:</strong> {{ profile.contact_parents }}</li>
             </ul>
         </div>
+        <a href="{% url 'chat' user.id profile.user.id %}" class="">chat</a>
+
+
+        <a href="{% url 'add_involvement' profile.user.id %}" class="btn btn-info">Add Involvement</a>
+        <a href="{% url 'view_involvements' profile.user.id %}" class="btn btn-secondary">View Involvements</a>
     </div>
+    
     {% empty %}
     <p>No profiles found.</p>
     {% endfor %}
