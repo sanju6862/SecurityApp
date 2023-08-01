@@ -1,8 +1,8 @@
 {% extends "users/base.html" %}
 {% block content %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'LostFound.css' %}">
-<script src="{% static 'LostFound.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'LostFound/LostFound.css' %}">
+<script src="{% static 'LostFound/LostFound.js' %}"></script>
 <div class="form-container">
     <form method="post" action="{% url 'report_found_item' %}" enctype="multipart/form-data">
         {% csrf_token %}

@@ -1,7 +1,7 @@
 {% extends "users/base.html" %}
 {% block content %}
 {%load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'view_complaint.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'complaints/view_complaint.css' %}">
 <div class="search-container">
     <form action="{% url 'view_complaints' %}" method="GET">
         <input type="text" placeholder="Search Complaint" name="search" value="{{ search }}">

@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Live Location Sender</title>
-    <link rel="stylesheet" href="{% static 'location_sender.css' %}">
+    <link rel="stylesheet" href="{% static 'map/location_sender.css' %}">
     <!-- Include the Google Maps API script -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
 </head>
@@ -16,7 +16,7 @@
         <button id="activateButton" onclick="activateSendingLocation()">Activate</button>
         <button id="deactivateButton" onclick="deactivateSendingLocation()" disabled>Deactivate</button>
     </div>
-    <script src="{% static 'location_sender.js' %}"></script>
+    <script src="{% static 'map/location_sender.js' %}"></script>
 </body>
 </html>
 {% endblock content %}

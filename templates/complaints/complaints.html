@@ -2,8 +2,8 @@
 {% extends "users/base.html" %}
 {% block content %}
 {%load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'complaints.css' %}">
-<script src="{% static 'complaints.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'complaints/complaints.css' %}">
+<script src="{% static 'complaints/complaints.js' %}"></script>
 <form method="post" class="form-container">
   {% csrf_token %}
   <div style="margin-bottom: 20px;">

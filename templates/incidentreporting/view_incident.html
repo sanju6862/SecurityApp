@@ -1,8 +1,8 @@
 {% extends "users/base.html" %}
 {% block content %}
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'viewincidents.css' %}">
-  <script src="{% static 'view_incidents.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'incidentreporting/viewincidents.css' %}">
+  <script src="{% static 'incidentreporting/view_incidents.js' %}"></script>
   <h1><a href="{% url 'view_incident' %}">All Incidents</a></h1>
 
   <!-- Search form -->

@@ -2,14 +2,14 @@
 {% block content %}
   {% load static %}
 
-  <link rel="stylesheet" href="{% static 'map.css' %}">
-  <link rel="stylesheet" href="{% static 'incidentreporting.css' %}">
+  <link rel="stylesheet" href="{% static 'map/map.css' %}">
+  <link rel="stylesheet" href="{% static 'incidentreporting/incidentreporting.css' %}">
   <h4>Select Location</h4>
   <div id="container">
     <div id="map"></div>
   </div>
   <!-- <script src="{% static 'incidentreporting.js' %}"></script> -->
-  <script src="{% static 'incidentreporting.js' %}"></script>
+  <script src="{% static 'incidentreporting/incidentreporting.js' %}"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpOiF-121i2BcRBwWHg2ZSJxSl2QGsAwY&callback=initMap" async defer></script>
   <div class="form-container">
     <form method="post" action="{% url 'report_incident' %}" enctype="multipart/form-data">
